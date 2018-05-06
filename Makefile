@@ -1,9 +1,23 @@
 
-VERSION := $(shell cd src && lua -e "require [[Test.LongString]]; print(Test.LongString._VERSION)")
+LUA     := lua
+VERSION := $(shell cd src && $(LUA) -e "require [[Test.LongString]]; print(Test.LongString._VERSION)")
 TARBALL := lua-testlongstring-$(VERSION).tar.gz
 ifndef REV
   REV   := 1
 endif
+
+ifndef DESTDIR
+  DESTDIR := /usr/local
+endif
+BINDIR  := $(DESTDIR)/bin
+LIBDIR  := $(DESTDIR)/share/lua/5.1
+
+install:
+	mkdir -p $(LIBDIR)/Test
+	cp src/Test/LongString.lua      $(LIBDIR)/Test
+
+uninstall:
+	rm -f $(LIBDIR)/Test/LongString.lua
 
 manifest_pl := \
 use strict; \
@@ -58,9 +72,15 @@ dist: $(TARBALL)
 rockspec: $(TARBALL)
 	perl -e '$(rockspec_pl)' rockspec.in > rockspec/lua-testlongstring-$(VERSION)-$(REV).rockspec
 
-export LUA_PATH=;;./src/?.lua
+check: test
+
 test:
-	prove --exec=lua test/*.t
+	cd src && prove --exec=$(LUA) ../test/*.t
+
+coverage:
+	rm -f src/luacov.stats.out src/luacov.report.out
+	cd src && prove --exec="$(LUA) -lluacov" ../test/*.t
+	cd src && luacov
 
 html:
 	xmllint --noout --valid doc/*.html
