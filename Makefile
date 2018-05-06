@@ -1,6 +1,6 @@
 
 LUA     := lua
-VERSION := $(shell cd src && $(LUA) -e "require [[Test.LongString]]; print(Test.LongString._VERSION)")
+VERSION := $(shell cd src && $(LUA) -e "m = require [[Test.LongString]]; print(m._VERSION)")
 TARBALL := lua-testlongstring-$(VERSION).tar.gz
 ifndef REV
   REV   := 1
@@ -26,6 +26,8 @@ my @files = qw{MANIFEST}; \
 while (<>) { \
     chomp; \
     next if m{^\.}; \
+    next if m{^doc/\.}; \
+    next if m{^doc/google}; \
     next if m{^rockspec/}; \
     push @files, $$_; \
 } \
@@ -58,7 +60,10 @@ CHANGES:
 tag:
 	git tag -a -m 'tag release $(VERSION)' $(VERSION)
 
-MANIFEST:
+doc:
+	git read-tree --prefix=doc/ -u remotes/origin/gh-pages
+
+MANIFEST: doc
 	git ls-files | perl -e '$(manifest_pl)' > MANIFEST
 
 $(TARBALL): MANIFEST
@@ -66,6 +71,8 @@ $(TARBALL): MANIFEST
 	perl -ne 'print qq{lua-TestLongString-$(VERSION)/$$_};' MANIFEST | \
 	    tar -zc -T - -f $(TARBALL)
 	rm lua-TestLongString-$(VERSION)
+	rm -rf doc
+	git rm doc/*
 
 dist: $(TARBALL)
 
@@ -82,11 +89,12 @@ coverage:
 	cd src && prove --exec="$(LUA) -lluacov" ../test/*.t
 	cd src && luacov
 
-html:
-	xmllint --noout --valid doc/*.html
+README.html: README.md
+	Markdown.pl README.md > README.html
 
 clean:
-	rm -f MANIFEST *.bak
+	rm -rf doc
+	rm -f MANIFEST *.bak src/luacov.*.out README.html
 
 .PHONY: test rockspec CHANGES
 

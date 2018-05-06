@@ -15,16 +15,16 @@ description = {
         It provides functions for comparing and testing strings
         that are not in plain text or are especially long.
     ]],
-    homepage = 'http://testlongstring.luaforge.net/',
+    homepage = 'http://fperrad.github.com/lua-TestLongString/',
     maintainer = 'Francois Perrad',
     license = 'MIT/X11'
 }
 dependencies = {
     'lua >= 5.1',
-    'lua-testmore >= 0.2.0',
+    'lua-testmore >= 0.2.3',
 }
 build = {
-    type = 'builtin',
+    type = 'none',
     modules = {
         ['Test.LongString']     = 'src/Test/LongString.lua',
     },

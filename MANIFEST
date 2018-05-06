@@ -2,7 +2,8 @@ CHANGES
 COPYRIGHT
 MANIFEST
 Makefile
-README
+README.md
+doc/Makefile
 doc/index.html
 doc/testlongstring.html
 rockspec.in
