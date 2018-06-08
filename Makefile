@@ -4,7 +4,7 @@ VERSION := $(shell cd src && $(LUA) -e "m = require [[Test.LongString]]; print(m
 TARBALL := lua-testlongstring-$(VERSION).tar.gz
 REV     := 1
 
-LUAVER  := 5.1
+LUAVER  := 5.3
 PREFIX  := /usr/local
 DPREFIX := $(DESTDIR)$(PREFIX)
 LIBDIR  := $(DPREFIX)/share/lua/$(LUAVER)
@@ -26,8 +26,7 @@ my @files = qw{MANIFEST}; \
 while (<>) { \
     chomp; \
     next if m{^\.}; \
-    next if m{^doc/\.}; \
-    next if m{^doc/google}; \
+    next if m{^debian/}; \
     next if m{^rockspec/}; \
     push @files, $$_; \
 } \
@@ -63,10 +62,7 @@ dist.info:
 tag:
 	git tag -a -m 'tag release $(VERSION)' $(VERSION)
 
-doc:
-	git read-tree --prefix=doc/ -u remotes/origin/gh-pages
-
-MANIFEST: doc
+MANIFEST:
 	git ls-files | perl -e '$(manifest_pl)' > MANIFEST
 
 $(TARBALL): MANIFEST
@@ -74,8 +70,6 @@ $(TARBALL): MANIFEST
 	perl -ne 'print qq{lua-TestLongString-$(VERSION)/$$_};' MANIFEST | \
 	    tar -zc -T - -f $(TARBALL)
 	rm lua-TestLongString-$(VERSION)
-	rm -rf doc
-	git rm doc/*
 
 dist: $(TARBALL)
 
@@ -85,13 +79,21 @@ rockspec: $(TARBALL)
 rock:
 	luarocks pack rockspec/lua-testlongstring-$(VERSION)-$(REV).rockspec
 
+deb:
+	echo "lua-testlongstring ($(shell git describe --dirty)) unstable; urgency=medium" >  debian/changelog
+	echo ""                         >> debian/changelog
+	echo "  * UNRELEASED"           >> debian/changelog
+	echo ""                         >> debian/changelog
+	echo " -- $(shell git config --get user.name) <$(shell git config --get user.email)>  $(shell date -R)" >> debian/changelog
+	fakeroot debian/rules clean binary
+
 check: test
 
 test:
 	cd src && prove --exec=$(LUA) ../test/*.t
 
 luacheck:
-	luacheck --std=max src
+	luacheck --std=max src --ignore 211/_ENV
 	luacheck --std=min --config .test.luacheckrc test/*.t
 
 coverage:
@@ -102,16 +104,18 @@ coverage:
 coveralls:
 	rm -f src/luacov.stats.out src/luacov.report.out
 	cd src && prove --exec="$(LUA) -lluacov" ../test/*.t
-	cd src && luacov-coveralls -e ^/usr -e %.t$ -v
+	cd src && luacov-coveralls -e /HERE/ -e %.t$ -v
 
 README.html: README.md
 	Markdown.pl README.md > README.html
 
+gh-pages:
+	mkdocs gh-deploy --clean
+
 clean:
-	rm -rf doc
 	rm -f MANIFEST *.bak src/luacov.*.out README.html
 
 realclean: clean
 
-.PHONY: test rockspec CHANGES dist.info
+.PHONY: test rockspec deb CHANGES dist.info
 

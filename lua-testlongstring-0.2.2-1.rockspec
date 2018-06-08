@@ -1,17 +1,17 @@
 -- This file was automatically generated for the LuaDist project.
 
 package = 'lua-TestLongString'
-version = '0.2.1-1'
+version = '0.2.2-1'
 -- LuaDist source
 source = {
-  tag = "0.2.1-1",
+  tag = "0.2.2-1",
   url = "git://github.com/LuaDist-testing/lua-testlongstring.git"
 }
 -- Original source
 -- source = {
---     url = 'http://sites.google.com/site/fperrad/lua-testlongstring-0.2.1.tar.gz',
---     md5 = '0b57dc2e58bd30772aee9c616dadd272',
---     dir = 'lua-TestLongString-0.2.1',
+--     url = 'http://github.com/fperrad/lua-testlongstring/raw/releases/lua-testlongstring-0.2.2.tar.gz',
+--     md5 = '8e449346a1700f2af8593ef78736046e',
+--     dir = 'lua-TestLongString-0.2.2',
 -- }
 description = {
     summary = "an extension for testing long string",
@@ -36,5 +36,5 @@ build = {
     modules = {
         ['Test.LongString']     = 'src/Test/LongString.lua',
     },
-    copy_directories = { 'doc', 'test' },
+    copy_directories = { 'docs', 'test' },
 }

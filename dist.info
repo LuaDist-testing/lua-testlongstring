@@ -1,6 +1,6 @@
 
 name = "lua-testlongstring"
-version = "0.2.1"
+version = "0.2.2"
 
 desc = "an extension for testing long string"
 author = "Francois Perrad"

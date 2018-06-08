@@ -1,5 +1,9 @@
 Revision history for lua-TestLongString
 
+0.2.2  Sat Jan 20 17:30:00 2018
+	shadow _ENV
+	add Debian package infrastructure
+
 0.2.1  Sat Jan 31 18:30:00 2015
 	minor cleanup
 

@@ -1,0 +1,9 @@
+site_name: lua-TestLongString
+site_description: a lua-TestMore extension
+site_author: François Perrad
+repo_url: https://github.com/fperrad/lua-TestLongString
+pages:
+- Home: index.md
+- API: testlongstring.md
+theme: mkdocs
+copyright: Copyright &copy; 2009-2018 Fran&ccedil;ois Perrad

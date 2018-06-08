@@ -1,7 +1,7 @@
 package = 'lua-TestLongString'
 version = '@version@-@rev@'
 source = {
-    url = 'http://sites.google.com/site/fperrad/lua-testlongstring-@version@.tar.gz',
+    url = 'http://github.com/fperrad/lua-testlongstring/raw/releases/lua-testlongstring-@version@.tar.gz',
     md5 = '@md5@',
     dir = 'lua-TestLongString-@version@',
 }
@@ -28,5 +28,5 @@ build = {
     modules = {
         ['Test.LongString']     = 'src/Test/LongString.lua',
     },
-    copy_directories = { 'doc', 'test' },
+    copy_directories = { 'docs', 'test' },
 }

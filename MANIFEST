@@ -4,10 +4,9 @@ MANIFEST
 Makefile
 README.md
 dist.info
-doc/Makefile
-doc/doc.css
-doc/index.html
-doc/testlongstring.html
+docs/index.md
+docs/testlongstring.md
+mkdocs.yml
 rockspec.in
 src/Test/LongString.lua
 test/00require.t

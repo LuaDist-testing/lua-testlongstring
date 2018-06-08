@@ -11,7 +11,7 @@ local string = string
 
 local tb = require 'Test.Builder':new()
 
-_ENV = nil
+local _ENV = nil
 local m = {}
 
 -- Maximum string length displayed in diagnostics
@@ -254,9 +254,9 @@ for k, v in pairs(m) do  -- injection
     end
 end
 
-m._VERSION = "0.2.1"
+m._VERSION = "0.2.2"
 m._DESCRIPTION = "lua-TestLongString : an extension for testing long string"
-m._COPYRIGHT = "Copyright (c) 2009-2015 Francois Perrad"
+m._COPYRIGHT = "Copyright (c) 2009-2018 Francois Perrad"
 return m
 --
 -- This library is licensed under the terms of the MIT/X11 license,
