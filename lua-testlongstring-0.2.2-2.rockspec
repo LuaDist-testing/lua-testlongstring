@@ -1,15 +1,15 @@
 -- This file was automatically generated for the LuaDist project.
 
 package = 'lua-TestLongString'
-version = '0.2.2-1'
+version = '0.2.2-2'
 -- LuaDist source
 source = {
-  tag = "0.2.2-1",
-  url = "git://github.com/LuaDist-testing/lua-testlongstring.git"
+  url = "git://github.com/LuaDist-testing/lua-testlongstring.git",
+  tag = "0.2.2-2"
 }
 -- Original source
 -- source = {
---     url = 'http://github.com/fperrad/lua-testlongstring/raw/releases/lua-testlongstring-0.2.2.tar.gz',
+--     url = 'https://framagit.org/fperrad/lua-TestLongString/raw/releases/lua-testlongstring-0.2.2.tar.gz',
 --     md5 = '8e449346a1700f2af8593ef78736046e',
 --     dir = 'lua-TestLongString-0.2.2',
 -- }
@@ -23,7 +23,7 @@ description = {
         It provides functions for comparing and testing strings
         that are not in plain text or are especially long.
     ]],
-    homepage = 'http://fperrad.github.io/lua-TestLongString/',
+    homepage = 'http://fperrad.frama.io/lua-TestLongString/',
     maintainer = 'Francois Perrad',
     license = 'MIT/X11'
 }
